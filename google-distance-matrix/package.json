@@ -14,7 +14,9 @@
   "author": "Derek Vien",
   "license": "ISC",
   "dependencies": {
+    "csv-to-array": "^1.0.2",
     "google-distance": "^1.0.1",
+    "json-property-filter": "^1.2.0",
     "mongoose": "^4.7.6"
   }
 }

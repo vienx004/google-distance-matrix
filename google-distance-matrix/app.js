@@ -1,26 +1,22 @@
 var distance = require('google-distance');
-var mongoose = require('mongoose');
-var origin_address = '';
-var destination_address;
+var filters = require('json-property-filter');
 
-mongoose.connect('mongodb://localhost/addresses');
+var filter = new filters.JsonPropertyFilter(['origin', 'destination', 'distance', 'duration', '-distanceValue', '-durationValue'])
+var Originpath = '\Origins.txt';
+var Destinationpath = '\Destinations.txt';
 
-var Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+var fs = require('fs');
+var Originarray = fs.readFileSync(Originpath).toString().split('\r\n');
+var Destinationarray = fs.readFileSync(Destinationpath).toString().split('\r\n');
 
-var addresses = new Schema({
-    ObjectId:   ObjectId,
-    address:    String,
-    latitude:   Number,
-    longitude:  Number,
-    type:       String
-});
+distance.get(
+    {
+        origins: Originarray,
+        destinations: Destinationarray,
+        units: 'imperial'
+    },
 
-var MyModel = mongoose.model('addresses', addresses)
-
-MyModel.find({type:'Origin'}, function(err, response) {
-
-        origin_address = response[0].address
-        console.log(origin_address);
-});
-
+    function(err, data) {
+        if (err) return console.log(err);
+        console.log(filter.apply(data));
+    });
