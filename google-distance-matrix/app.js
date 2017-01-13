@@ -2,7 +2,7 @@ var distance = require('google-distance');
 var filters = require('json-property-filter');
 
 var filter = new filters.JsonPropertyFilter(['origin', 'destination', 'distance', 'duration', '-distanceValue', '-durationValue'])
-var Originpath = '\Origins.txt';
+var Originpath = '\CVS.txt';
 var Destinationpath = '\Destinations.txt';
 
 var fs = require('fs');
